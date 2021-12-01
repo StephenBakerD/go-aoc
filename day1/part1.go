@@ -1,6 +1,6 @@
 package day1
 
-func Count(measurements ...int) int{
+func Part1(measurements ...int) int{
 	result := 0
 
 	previousMeasurement := measurements[0]
@@ -12,4 +12,4 @@ func Count(measurements ...int) int{
 	}
 	
 	return result
-}``
+}

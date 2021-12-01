@@ -9,20 +9,20 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func Test_Day1_Example_Input(t *testing.T) {
-	answer := Count(199, 200, 208, 210, 200, 207, 240, 269, 260, 263)
+func Test_part1_example_input(t *testing.T) {
+	answer := Part1(199, 200, 208, 210, 200, 207, 240, 269, 260, 263)
 	assert.Equal(t, 7, answer)
 }
 
-func Test_Day1_My_Input(t *testing.T) {
+func Test_part1_my_input(t *testing.T) {
 	values := readInput()
-	answer := Count(values...)
+	answer := Part1(values...)
 	t.Log(answer)
 }
 
 func readInput() []int {
 	//read complete file into bytes
-	bytes, err := os.ReadFile("input.txt")
+	bytes, err := os.ReadFile("part1_input.txt")
 	if err != nil {
 		panic(err)
 	}
