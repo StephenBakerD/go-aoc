@@ -5,7 +5,7 @@ func Part2(measurements ...int) int {
 	var groupsOfThree []int
 
 	//build slice with sum of groups of 3
-	for i, _ := range measurements {
+	for i := range measurements {
 		if i+2 <= len(measurements)-1 {
 			sum := measurements[i] + measurements[i+1] + measurements[i+2]
 			groupsOfThree = append(groupsOfThree, sum)
