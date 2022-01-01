@@ -14,7 +14,7 @@ func Test_parse_lines(t *testing.T) {
 		"0,0 -> 0,1"
 	input := strings.Split(inputRaw, "\n")
 
-	lines := parseLines(&input)
+	lines := parseLines_part1(&input)
 
 	line0 := (*lines)[0]                  //(0,0 -> 2,0)
 	assert.Equal(t, 0, line0.Points[0].X) //0,0
@@ -45,7 +45,7 @@ func Test_part1_example(t *testing.T) {
 		"5,5 -> 8,2"
 	input := strings.Split(inputRaw, "\n")
 
-	lines := parseLines(&input)
+	lines := parseLines_part1(&input)
 	//there should only be 6 lines, since we only consider horizontal or vertical lines
 	assert.Equal(t, 6, len(*lines))
 	score := calculateOverlappingPoints(lines)
@@ -55,32 +55,13 @@ func Test_part1_example(t *testing.T) {
 
 func Test_part1(t *testing.T) {
 	input := readInput("input.txt")
-	lines := parseLines(input)
+	lines := parseLines_part1(input)
 	score := calculateOverlappingPoints(lines)
 
 	t.Log(score)
 }
 
-func calculateOverlappingPoints(lines *[]Line) int {
-	var points map[Point]int = make(map[Point]int)
-	var score int
-
-	for _, line := range *lines {
-		for _, point := range line.Points {
-			points[point]++ //if it doesn't exist, val will be 0
-		}
-	}
-
-	for _, value := range points {
-		if value > 1 {
-			score++
-		}
-	}
-
-	return score
-}
-
-func parseLines(input *[]string) *[]Line {
+func parseLines_part1(input *[]string) *[]Line {
 	var lines []Line
 	for _, row := range *input {
 		//clean up string
@@ -143,14 +124,4 @@ func parseLines(input *[]string) *[]Line {
 	}
 
 	return &lines
-}
-
-type Line struct {
-	Name   string
-	Points []Point
-}
-
-type Point struct {
-	X int
-	Y int
 }
