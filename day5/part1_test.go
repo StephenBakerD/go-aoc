@@ -14,9 +14,9 @@ func Test_parse_lines(t *testing.T) {
 		"0,0 -> 0,1"
 	input := strings.Split(inputRaw, "\n")
 
-	lines := parseLines_part1(&input)
+	lines := parseLines_part1(input)
 
-	line0 := (*lines)[0]                  //(0,0 -> 2,0)
+	line0 := lines[0]                  //(0,0 -> 2,0)
 	assert.Equal(t, 0, line0.Points[0].X) //0,0
 	assert.Equal(t, 0, line0.Points[0].Y)
 	assert.Equal(t, 1, line0.Points[1].X) //1, 0
@@ -24,7 +24,7 @@ func Test_parse_lines(t *testing.T) {
 	assert.Equal(t, 2, line0.Points[2].X) //2, 0
 	assert.Equal(t, 0, line0.Points[2].Y)
 
-	line1 := (*lines)[1]                  //(0,0 -> 0,1)
+	line1 := lines[1]                  //(0,0 -> 0,1)
 	assert.Equal(t, 0, line1.Points[0].X) //0,0
 	assert.Equal(t, 0, line1.Points[0].Y)
 	assert.Equal(t, 0, line1.Points[1].X) //0,1
@@ -45,9 +45,9 @@ func Test_part1_example(t *testing.T) {
 		"5,5 -> 8,2"
 	input := strings.Split(inputRaw, "\n")
 
-	lines := parseLines_part1(&input)
+	lines := parseLines_part1(input)
 	//there should only be 6 lines, since we only consider horizontal or vertical lines
-	assert.Equal(t, 6, len(*lines))
+	assert.Equal(t, 6, len(lines))
 	score := calculateOverlappingPoints(lines)
 
 	assert.Equal(t, 5, score)
@@ -61,9 +61,9 @@ func Test_part1(t *testing.T) {
 	t.Log(score)
 }
 
-func parseLines_part1(input *[]string) *[]Line {
+func parseLines_part1(input []string) []Line {
 	var lines []Line
-	for _, row := range *input {
+	for _, row := range input {
 		//clean up string
 		row = strings.ReplaceAll(strings.Trim(row, "\t"), " ", "")
 
@@ -123,5 +123,5 @@ func parseLines_part1(input *[]string) *[]Line {
 		}
 	}
 
-	return &lines
+	return lines
 }

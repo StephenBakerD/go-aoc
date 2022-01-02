@@ -23,9 +23,9 @@ func Test_part2_example(t *testing.T) {
 		"5,5 -> 8,2" 
 	input := strings.Split(inputRaw, "\n")
 
-	lines := parseLines_part2(&input)
+	lines := parseLines_part2(input)
 	//diagonal lines now permitted
-	assert.Equal(t, 10, len(*lines))
+	assert.Equal(t, 10, len(lines))
 	score := calculateOverlappingPoints(lines)
 
 	assert.Equal(t, 12, score)
@@ -39,9 +39,9 @@ func Test_part2(t *testing.T) {
 	t.Log(score)
 }
 
-func parseLines_part2(input *[]string) *[]Line {
+func parseLines_part2(input []string) []Line {
 	var lines []Line
-	for _, row := range *input {
+	for _, row := range input {
 		//clean up string
 		row = strings.ReplaceAll(strings.Trim(row, "\t"), " ", "")
 
@@ -77,15 +77,15 @@ func parseLines_part2(input *[]string) *[]Line {
 		slope, undefinedSlope := calculateSlope(point1, point2)
 
 		if slope == 0 || undefinedSlope { //horizontal or vertical line
-			line := interpolateHorizontalVerticalPoints(row, point1, point2)
-			lines = append(lines, *line)
+			points := interpolateHorizontalVerticalPoints(point1, point2)
+			lines = append(lines, Line{Name: row, Points: points})
 		} else if math.Abs(slope) == 1 { //diagonal line
-			line := interpolateDiagonalPoints(row, point1, point2)
-			lines = append(lines, *line)
+			points := interpolateDiagonalPoints(point1, point2)
+			lines = append(lines, Line{Name: row, Points: points})
 		} //else discard line
 	}
 
-	return &lines
+	return lines
 }
 
 func calculateSlope(point1 Point, point2 Point) (float64, bool) {
@@ -104,7 +104,7 @@ func calculateSlope(point1 Point, point2 Point) (float64, bool) {
 	return slope, undefinedSlope
 }
 
-func interpolateHorizontalVerticalPoints(lineName string, point1 Point, point2 Point) *Line {
+func interpolateHorizontalVerticalPoints(point1 Point, point2 Point) []Point {
 	var points []Point
 
 	//ensure point1 is smaller
@@ -124,10 +124,10 @@ func interpolateHorizontalVerticalPoints(lineName string, point1 Point, point2 P
 		}
 	}
 
-	return &Line{Name: lineName, Points: points}
+	return points
 }
 
-func interpolateDiagonalPoints(lineName string, point1 Point, point2 Point) *Line {
+func interpolateDiagonalPoints(point1 Point, point2 Point) []Point {
 	var points []Point
 
 	tempPoint := point1
@@ -157,5 +157,5 @@ func interpolateDiagonalPoints(lineName string, point1 Point, point2 Point) *Lin
 		points = append(points, tempPoint)
 	}
 
-	return &Line{Name: lineName, Points: points}
+	return points
 }

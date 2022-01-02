@@ -15,7 +15,7 @@ type Point struct {
 	Y int
 }
 
-func readInput(fileName string) *[]string {
+func readInput(fileName string) []string {
 	//read complete file into bytes
 	bytes, err := os.ReadFile(fileName)
 	if err != nil {
@@ -26,14 +26,14 @@ func readInput(fileName string) *[]string {
 	content := string(bytes)
 
 	lines := strings.Split(content, "\r\n")
-	return &lines
+	return lines
 }
 
-func calculateOverlappingPoints(lines *[]Line) int {
+func calculateOverlappingPoints(lines []Line) int {
 	var points map[Point]int = make(map[Point]int)
 	var score int
 
-	for _, line := range *lines {
+	for _, line := range lines {
 		for _, point := range line.Points {
 			points[point]++ //if it doesn't exist, val will be 0
 		}
